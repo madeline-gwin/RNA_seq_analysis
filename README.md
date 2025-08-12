@@ -25,11 +25,11 @@ md5sum 02.Report_sampleID.zip >> check.txt
 sort check.txt | uniq | sort -k2
 ```
 ## Pre-processing
-### Check Quality of Raw Reads Before Filtering
+#### Check Quality of Raw Reads Before Filtering
 Run [fastqc.sh](https://github.com/madeline-gwin/RNA_seq_analysis/blob/main/shell_scripts/fastqc.sh) to generate FastQC files and a combined MuitiQC file. This information can help guide you through filtering and adapter trimming processes. 
-### Trimming
+#### Trimming
 Run [fastp.sh](https://github.com/madeline-gwin/RNA_seq_analysis/blob/main/shell_scripts/fastp.sh) to trim adapter sequences and low quality reads. 
-### Check Quality of Reads After Filtering
+#### Check Quality of Reads After Filtering
 Run [fastqc.sh](https://github.com/madeline-gwin/RNA_seq_analysis/blob/main/shell_scripts/fastqc.sh) to generate FastQC files and a combined MuitiQC file to verify that your trimming did what it needed to. 
 
 ## Genome Indexing
@@ -37,9 +37,9 @@ Run [star_indexing.sh](https://github.com/madeline-gwin/RNA_seq_analysis/blob/ma
 
 ## 2 Pass Mapping
 Two pass mapping is the gold standard in RNA sequencing analysis because it increases confidence of reads being mapped across exon-exon junctions.
-### Collect Junctions
+#### Collect Junctions
 Run [star_mapping.sh](https://github.com/madeline-gwin/RNA_seq_analysis/blob/main/shell_scripts/star_mapping.sh) on the **first pass** option. 
-### Filter Junctions
+#### Filter Junctions
 Run [filter_junctions.sh](https://github.com/madeline-gwin/RNA_seq_analysis/blob/main/shell_scripts/filter_junctions.sh).
-### Map Reads
+#### Map Reads
 Run [star_mapping.sh](https://github.com/madeline-gwin/RNA_seq_analysis/blob/main/shell_scripts/star_mapping.sh) on the **second pass** option.
