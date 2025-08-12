@@ -1,11 +1,11 @@
 # RNA_seq_analysis
 Built from [Emily Yaklich's dev_RNAseq pipeline](https://github.com/emilyyaklich/dev_RNAseq). 
 ## Program Information
-FastQC
-MultiQC
-FastP
-Star
-DESeq2
++ [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
++ [MultiQC](https://seqera.io/multiqc/)
++ [FastP](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234)
++ [Star](https://physiology.med.cornell.edu/faculty/skrabanek/lab/angsd/lecture_notes/STARmanual.pdf)
++ [DESeq2](https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)
 # Part 1: Read Mapping and Quantification
 ## Checking Downloaded Raw Reads for Corruption
 ```
