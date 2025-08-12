@@ -25,9 +25,16 @@ md5sum 02.Report_sampleID.zip >> check.txt
 ## if corruption had occured, there would be two entries for one file with two different md5sums
 sort check.txt | uniq | sort -k2
 ```
+
 ## Pre-processing
+
 #### Check Quality of Raw Reads Before Filtering
 Run [fastqc.sh](https://github.com/madeline-gwin/RNA_seq_analysis/blob/main/shell_scripts/fastqc.sh) to generate FastQC files and a combined MuitiQC file. This information can help guide you through filtering and adapter trimming processes. 
+##### Ex. Input
+Sample1_Day1_Rep1.fq.gz
+##### Ex. Output
+Sample1_Day1_Rep1.html
+
 #### Trimming
 Run [fastp.sh](https://github.com/madeline-gwin/RNA_seq_analysis/blob/main/shell_scripts/fastp.sh) to trim adapter sequences and low quality reads. 
 #### Check Quality of Reads After Filtering
