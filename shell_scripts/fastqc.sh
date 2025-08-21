@@ -1,5 +1,6 @@
 #!/bin/bash
 
+module load biocontainers
 module load fastqc
 module load multiqc
 
