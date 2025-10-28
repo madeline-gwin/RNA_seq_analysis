@@ -26,10 +26,10 @@ md5sum 02.Report_sampleID.zip >> check.txt
 sort check.txt | uniq | sort -k2
 ```
 These oneliners check that files downloaded from the sequencer's website were not corrupted during the download and file transfer process. 
-MD5.txt = md5sum's the sequencer provided
-01.RawData = directory including raw reads
-D0R1/2/3 = directory specifying conditions to separate replicates 
-02.Report_sampleID.zip = metadata the sequencer provided
+  MD5.txt = md5sum's the sequencer provided
+  01.RawData = directory including raw reads
+  D0R1/2/3 = directory specifying conditions to separate replicates 
+  02.Report_sampleID.zip = metadata the sequencer provided
 
 ## Pre-processing
 
