@@ -1,8 +1,20 @@
 #!/bin/bash
 
+#SBATCH --job-name=fastp_take1          # job name
+#SBATCH --partition=capitulab           # partition
+#SBATCH --ntasks=1                      # number of tasks across all nodes
+#SBATCH --cpus-per-task=4               # number of cpus per task
+#SBATCH --mem=12GB                      # total memory requested
+#SBATCH --time=72:00:00                 # Run time (D-HH:MM:SS)
+#SBATCH --output=job-%j.out             # Output file. %j is replaced with job ID
+#SBATCH --error=job-%j.err              # Error file. %j is replaced with job ID
+#SBATCH --mail-type=ALL                 # will send email for begin,end,fail
+#SBATCH --mail-user=magwin@clemson.edu
+
+
 # Set input and output base directories
-INPUT_DIR="/scratch/magwin/callus_RNA/raw_data/"
-OUTPUT_DIR="/scratch/magwin/callus_RNA/pre-processing/after_filtering/"
+INPUT_DIR="/scratch/magwin/BCY_floret_dev/raw_reads/"
+OUTPUT_DIR="/scratch/magwin/BCY_floret_dev/pre-processing/after_filtering/"
 THREADS=4
 
 # Create output directory if it doesn't exist
@@ -30,4 +42,3 @@ find "$INPUT_DIR" -name "*_1.fq.gz" | while read R1; do
         -h "$HTML" -j "$JSON" \
         -w "$THREADS"
 done
-
