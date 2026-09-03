@@ -1,18 +1,29 @@
 #!/bin/bash
+
+#SBATCH --job-name=filter_junctions_Hap2_GTF    # job name
+#SBATCH --partition=capitulab                   # partition
+#SBATCH --ntasks=1                              # number of tasks across all nodes
+#SBATCH --cpus-per-task=1                       # number of cpus per task
+#SBATCH --mem=10GB                              # total memory requested
+#SBATCH --time=72:00:00                         # Run time (D-HH:MM:SS)
+#SBATCH --output=job-%j.out                     # Output file. %j is replaced with job ID
+#SBATCH --error=job-%j.err                      # Error file. %j is replaced with job ID
+#SBATCH --mail-type=ALL                         # will send email for begin,end,fail
+#SBATCH --mail-user=magwin@clemson.edu
+
 set -o pipefail
 
 ##############################
 # HARD-CODED VARIABLES
 ##############################
 
-# Define your species
-SPECIES="Marigold"
-
 # Path to directory containing SJ.out.tab files and where outputs will be saved
-JUNCTIONDIR="/scratch/magwin/genome/genome_indices/$SPECIES/Junctions"
+#JUNCTIONDIR="/scratch/magwin/BCY_floret_dev/genomes/Hap1/genome_indices/Junctions"
+JUNCTIONDIR="/scratch/magwin/BCY_floret_dev/genomes/Hap2/genome_indices/Junctions"
 
 # Prefix for the final filtered junction list filename
-SJ_LISTNAME="$SPECIES"
+#SJ_LISTNAME="BCY_Hap1"
+SJ_LISTNAME="BCY_Hap2"
 
 # Filter settings:
 SCAFFOLD_STRING="NA"         # String indicating scaffold sequences, "NA" disables scaffold filtering
@@ -71,4 +82,3 @@ FINALNUM=$(wc -l < ${JUNCTIONDIR}/${SJ_LISTNAME}_SJ.filtered.tab)
 echo "After removing junctions supported by less than ${UNIQUE_NUM} uniquely mapped reads,"
 echo "the final filtered list contains ${FINALNUM} junctions and can be used for 2nd-pass read mapping"
 echo "This list can be found at: ${JUNCTIONDIR}/${SJ_LISTNAME}_SJ.filtered.tab"
-
