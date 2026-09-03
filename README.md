@@ -42,6 +42,17 @@ Sample1_Day1_Rep1.html
 
 #### Trimming
 Run [fastp.sh](https://github.com/madeline-gwin/RNA_seq_analysis/blob/main/shell_scripts/fastp.sh) to trim adapter sequences and low quality reads. 
+##### Installing FastP in an Anaconda enviroment
+''' #load Anaconda3
+module load anaconda3
+#create rnaseq_env environment
+conda create -n rnaseq_env fastp # try this first
+OR
+conda create -n rna_seq_env -c bioconda -c conda-forge fastp 
+#enter rnaseq_env environment
+source activate rnaseq_env
+'''
+
 #### Check Quality of Reads After Filtering
 Run [fastqc.sh](https://github.com/madeline-gwin/RNA_seq_analysis/blob/main/shell_scripts/fastqc.sh) to generate FastQC files and a combined MuitiQC file to verify that your trimming did what it needed to. 
 
