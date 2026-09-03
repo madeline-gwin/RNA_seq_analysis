@@ -1,5 +1,17 @@
 #!/bin/bash
 
+#SBATCH --job-name=STAR_Hap2_GTF_pass2  # job name
+#SBATCH --ntasks=1                      # number of tasks across all nodes
+#SBATCH --array=0-11                    # array number
+#SBATCH --cpus-per-task=12              # number of cpus per task
+#SBATCH --mem=50GB                      # total memory requested
+#SBATCH --time=2:00:00                  # Run time (D-HH:MM:SS)
+#SBATCH --output=job-%j.out             # Output file. %j is replaced with job ID
+#SBATCH --error=job-%j.err              # Error file. %j is replaced with job ID
+#SBATCH --mail-type=ALL                 # will send email for begin,end,fail
+#SBATCH --mail-user=magwin@clemson.edu
+
+
 # Load STAR module (adjust to your environment if needed)
 module load biocontainers
 module load star
@@ -13,52 +25,50 @@ set -o pipefail
 # Queuing system: "Slurm" or "PBS"
 QUEUE="Slurm"
 
-# What is your species?
-SPECIES="BCY"
-
 # Input directory (contains trimmed reads)
-RM_INPUT="/scratch/magwin/callus_RNA/pre-processing/after_filtering/$SPECIES"
+RM_INPUT="/scratch/magwin/BCY_floret_dev_analysis/pre-processing/after_filtering/"
 
 # File suffixes for forward and reverse reads
 FORWARD="_1_trimmed.fq.gz"
 REVERSE="_2_trimmed.fq.gz"
 
 # Output directories
-#CJ_OUTPUTDIR="/scratch/magwin/genome/genome_indices/$SPECIES/Junctions"
-CJ_OUTPUTDIR="/scratch/magwin/genome/genome_indices/BCY_hap1/Junctions"
+#CJ_OUTPUTDIR="/scratch/magwin/BCY_floret_dev_analysis/genomes/Hap1/genome_indices/Junctions"
+CJ_OUTPUTDIR="/scratch/magwin/BCY_floret_dev_analysis/genomes/Hap2/genome_indices/Junctions"
 
-#RM_OUTPUTDIR="/scratch/magwin/genome/read_mapping/$SPECIES/"
-RM_OUTPUTDIR="/scratch/magwin/genome/read_mapping/BCY_hap1/"
+#RM_OUTPUTDIR="/scratch/magwin/BCY_floret_dev_analysis/genomes/Hap1/read_mapping"
+RM_OUTPUTDIR="/scratch/magwin/BCY_floret_dev_analysis/genomes/Hap2/read_mapping"
 
 mkdir -p "$CJ_OUTPUTDIR"
 mkdir -p "$RM_OUTPUTDIR"
 
 # Genome index directory
-#GEN_DIR="/scratch/magwin/genome/genome_indices/$SPECIES/"
-GEN_DIR="/scratch/magwin/genome/genome_indices/BCY_hap1/"
+#GEN_DIR="/scratch/magwin/BCY_floret_dev_analysis/genomes/Hap1/genome_indices"
+GEN_DIR="/scratch/magwin/BCY_floret_dev_analysis/genomes/Hap2/genome_indices"
 
 # Job log (used in SLURM mode)
 ##Pass1
-#RM_JOB_LOG="/scratch/magwin/genome/genome_indices/$SPECIES/Junctions/job_log.txt"
-#RM_JOB_LOG="/scratch/magwin/genome/genome_indices/BCY_hap1/Junctions/job_log.txt"
+#RM_JOB_LOG="/scratch/magwin/BCY_floret_dev_analysis/genomes/Hap1/genome_indices/Junctions/job_log.txt"
+RM_JOB_LOG="/scratch/magwin/BCY_floret_dev_analysis/genomes/Hap2/genome_indices/Junctions/job_log.txt"
+
 ##Pass2
-#RM_JOB_LOG="/scratch/magwin/genome/read_mapping/$SPECIES/job_log.txt"
-RM_JOB_LOG="/scratch/magwin/genome/read_mapping/BCY_hap1/job_log.txt"
+#RM_JOB_LOG="/scratch/magwin/BCY_floret_dev_analysis/genomes/Hap1/read_mapping/job_log.txt"
+RM_JOB_LOG="/scratch/magwin/BCY_floret_dev_analysis/genomes/Hap2/read_mapping/job_log.txt"
 
 # Junctions file (if using second pass)
-#JUNCTIONS="/scratch/magwin/genome/genome_indices/$SPECIES/Junctions/${SPECIES}_SJ.filtered.tab"
-JUNCTIONS="/scratch/magwin/genome/genome_indices/BCY_hap1/Junctions/BCY_hap1_SJ.filtered.tab"
+#JUNCTIONS="/scratch/magwin/BCY_floret_dev_analysis/genomes/Hap1/genome_indices/Junctions/BCY_Hap1_SJ.filtered.tab"
+JUNCTIONS="/scratch/magwin/BCY_floret_dev_analysis/genomes/Hap2/genome_indices/Junctions/BCY_Hap2_SJ.filtered.tab"
 
 # STAR binary (only used for PBS)
 STAR_FILE="/path/to/star/executable/if/using/PBS"
 
 # STAR parameters
-RM_PASS="second"              # "first" or "second"
-RM_NTHREAD=8
-SEEDSEARCH=50			#Emily = 50
+RM_PASS="first"              # "first" or "second"
+RM_NTHREAD=12
+SEEDSEARCH=50                   #Emily = 50
 MAX_MIS=10
-MAX_N=10			#Emily = 10
-MINSCORE_READL=0.66		
+MAX_N=10                        #Emily = 10
+MINSCORE_READL=0.66
 MINMATCH_READL=0.66
 UNMAP_F="Fastx"              # Options: None, Within, Fastx
 GENOMIC_COORDINATE_BAMSORTED="yes"
@@ -219,4 +229,3 @@ else
     echo "Error: Unsure of whether first or second pass mode, exiting..."
     exit 1
 fi
-
